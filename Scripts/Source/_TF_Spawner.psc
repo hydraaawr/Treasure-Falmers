@@ -5,6 +5,7 @@ Keyword Property LocTypeDungeon auto
 Actor Property PlayerRef auto
 ActorBase Property _TF_Falmer auto
 FormList Property _TF_WallList auto
+Activator Property _TF_Portal auto
 
 Event OnInit()
 
@@ -17,9 +18,12 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 
     if(akNewLoc.HasKeyword(LocTypeDungeon))
         Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
-        ObjectReference ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,3000)
-        Debug.Notification("ClosestWall: " + ClosestWall.GetFormID())
+        ObjectReference ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,2048) ;; 29.25m aprox
+        Debug.Notification("ClosestWall: " + ClosestWall.GetFormID()) ;DEBUG
+        ClosestWall.PlaceAtMe(_TF_Portal)
         ClosestWall.PlaceAtMe(_TF_Falmer)
+        
+        
     endif
 
 EndEvent
