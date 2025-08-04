@@ -4,7 +4,7 @@ Scriptname _TF_Spawner extends ReferenceAlias
 Keyword Property LocTypeDungeon auto
 Actor Property PlayerRef auto
 ActorBase Property _TF_Falmer auto
-
+FormList Property _TF_WallList auto
 
 Event OnInit()
 
@@ -16,7 +16,10 @@ EndEvent
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 
     if(akNewLoc.HasKeyword(LocTypeDungeon))
-        PlayerRef.PlaceActorAtMe(_TF_Falmer)
+        Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
+        ObjectReference ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,3000)
+        Debug.Notification("ClosestWall: " + ClosestWall.GetFormID())
+        ClosestWall.PlaceAtMe(_TF_Falmer)
     endif
 
 EndEvent
