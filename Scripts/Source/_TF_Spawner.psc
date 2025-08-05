@@ -19,17 +19,32 @@ EndEvent
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 
     if(akNewLoc.HasKeyword(LocTypeDungeon))
-        Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
+        ;Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
         ObjectReference ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,2048) ;; 29.25m aprox
-        Debug.Notification("ClosestWall: " + ClosestWall.GetFormID()) ;DEBUG
-        ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
-        Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object reference at wall
-        Utility.Wait(10)
-        ; Exit
-        Falmer.PlaceAtMe(_TF_Portal)
-        Falmer.Disable(abFadeOut = true)
-        Falmer.Delete()
         
+        
+        ;; Look for another viable wall
+        while(!ClosestWall || !PlayerRef.HasLOS(ClosestWall))
+            Debug.Notification("Trying to find a viable wall...") ;DEBUG
+            ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,2048)
+            Utility.Wait(10) ; scan every XX
+        endwhile
+        
+
+        if(ClosestWall && PlayerRef.HasLOS(ClosestWall)) ; if exists and can see it
+            Debug.Notification("Closest viable wall: " + ClosestWall.GetFormID()) ;DEBUG
+            Utility.Wait(2) ; timeout for when loading new dungeon
+            Debug.Notification("A Treasure Falmer appeared!")
+            ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
+            Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
+            Utility.Wait(10) ;;timeout until disappear
+            ; Exit
+            Debug.Notification("Treasure Falmer fled away!")
+            Falmer.PlaceAtMe(_TF_Portal)
+            Falmer.Disable(abFadeOut = true)
+            Falmer.Delete()
+
+        endif
         
     endif
 
