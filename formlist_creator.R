@@ -21,7 +21,7 @@ db_skyrim <- db_skyrim %>%
 
 
 db_skyrim_filt <- db_skyrim %>%
-    filter(str_detect(editorid,"Boulder")) ## Take boulders only
+    filter(str_detect(editorid,"Boulder|NorHall")) ## Take boulders only
 
 
 ## write ini
