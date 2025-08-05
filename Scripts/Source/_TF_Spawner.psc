@@ -6,7 +6,7 @@ Actor Property PlayerRef auto
 ActorBase Property _TF_Falmer auto
 FormList Property _TF_WallList auto
 Activator Property _TF_Portal auto
-
+Spell Property _TF_FalmerCloakAb auto
 Actor Falmer
 
 Event OnInit()
@@ -37,6 +37,7 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
             Debug.Notification("A Treasure Falmer appeared!")
             ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
             Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
+            Falmer.AddSpell(_TF_FalmerCloakAb)
             Utility.Wait(10) ;;timeout until disappear
             ; Exit
             if(!Falmer.Isdead()) ;; if alive
