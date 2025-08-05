@@ -39,10 +39,12 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
             Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
             Utility.Wait(10) ;;timeout until disappear
             ; Exit
-            Debug.Notification("Treasure Falmer fled away!")
-            Falmer.PlaceAtMe(_TF_Portal)
-            Falmer.Disable(abFadeOut = true)
-            Falmer.Delete()
+            if(!Falmer.Isdead()) ;; if alive
+                Debug.Notification("Treasure Falmer fled away!")
+                Falmer.PlaceAtMe(_TF_Portal)
+                Falmer.Disable(abFadeOut = true)
+                Falmer.Delete()
+            endIf
 
         endif
         
