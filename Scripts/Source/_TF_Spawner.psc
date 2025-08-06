@@ -51,10 +51,8 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
         int SpawnMode = Utility.RandomInt(0,1)
         if(SpawnMode == 0) ;this is the standard trigger (on location change, find first available wall)
             Debug.Notification("Standard Mode") ;DEBUG
-            ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,2048) ;; 29.25m aprox
-            
-            
-            ;; Look for another viable wall
+
+            ;; Look for viable wall
             while(!ClosestWall || !PlayerRef.HasLOS(ClosestWall))
 
                 ViableWallScan()
@@ -82,5 +80,21 @@ State DelMode
 
     Event OnUpdate()
         Debug.Notification("Init delayed scan")
+
+        ;; repeat the scanning
+        while(!ClosestWall || !PlayerRef.HasLOS(ClosestWall))
+
+            ViableWallScan()
+
+        endwhile
+
+        if(ClosestWall && PlayerRef.HasLOS(ClosestWall)) ; if exists and can see it
+                
+            FalmerSpawn()
+            
+        endif
+
+        GoToState("")
+
     endevent
 endState
