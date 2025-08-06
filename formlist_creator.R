@@ -30,7 +30,7 @@ db_skyrim_shaped <- shaper(db_skyrim)
 db_skyrim_filt <- db_skyrim_shaped %>%
   filter(
     # Keep only Nordic and Cave walls
-    str_detect(editorid, "(?i)^(Nor|CaveG)"),
+    str_detect(editorid, "(?i)^(Nor|CaveG|Dwe)"),
     
     # Keep only standard 1-4 way pieces
     str_detect(editorid, "(?i)[1-4]way|Boulder"),
@@ -53,3 +53,17 @@ ini_file_path <- ".\\TF_FLM.ini"
 dir.create(dirname(ini_file_path), showWarnings = FALSE)
 
 writeLines(formlist_content, ini_file_path)
+
+
+## Dawnguard is not necessary
+
+# db_dawnguard <- read.csv(".\\Resources\\dbs\\db_STAT_dawnguard.esm_v1.csv", sep =";")
+
+# db_dawnguard_shaped <- shaper(db_dawnguard)
+
+
+
+# db_dragonborn <- read.csv(".\\Resources\\dbs\\db_STAT_dragonborn.esm_v1.csv", sep =";")
+
+
+# db_dragonborn_shaped <- shaper(db_dragonborn)
