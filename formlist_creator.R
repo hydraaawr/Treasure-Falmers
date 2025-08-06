@@ -21,8 +21,18 @@ db_skyrim <- db_skyrim %>%
 
 
 db_skyrim_filt <- db_skyrim %>%
-    filter(str_detect(editorid,"Boulder|NorHall.*Way|Cave.*Way")) ## Take boulders only
-
+  filter(
+    # Keep only Nordic and Cave walls
+    str_detect(editorid, "(?i)^(Nor|CaveG)"),
+    
+    # Keep only standard 1-4 way pieces
+    str_detect(editorid, "(?i)[1-4]way|Boulder"),
+    
+  ) %>%
+  # Get one example per model type
+  distinct(model, .keep_all = TRUE) %>%
+  # Sort by name for consistency
+  arrange(editorid)
 
 ## write ini
 formlist_content <- paste0(
