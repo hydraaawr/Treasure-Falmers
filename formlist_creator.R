@@ -7,20 +7,27 @@ library(dplyr)
 
 rm(list = ls())
 
+shaper <- function(db){
+  colnames(db) <- c("Record","editor_formid","model")
+  db_shaped <- db %>%
+    mutate(
+      editorid = str_remove(editor_formid, "\\[STAT:.*\\]"), 
+      formid = str_extract(editor_formid, "(?<=STAT:)[^\\]]+"),
+      .keep = "unused"
+    )
+    return(db_shaped)
+}
+
+
+
 db_skyrim <- read.csv(".\\Resources\\dbs\\db_STAT_skyrim.esm_v1.csv", sep =";")
 
-colnames(db_skyrim) <- c("Record","editor_formid","model")
 
-db_skyrim <- db_skyrim %>%
-  mutate(
-    editorid = str_remove(editor_formid, "\\[STAT:.*\\]"), 
-    formid = str_extract(editor_formid, "(?<=STAT:)[^\\]]+"),
-    .keep = "unused"
-  )
+db_skyrim_shaped <- shaper(db_skyrim)
 
 
 
-db_skyrim_filt <- db_skyrim %>%
+db_skyrim_filt <- db_skyrim_shaped %>%
   filter(
     # Keep only Nordic and Cave walls
     str_detect(editorid, "(?i)^(Nor|CaveG)"),
