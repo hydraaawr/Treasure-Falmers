@@ -9,6 +9,8 @@ Activator Property _TF_Portal auto
 Spell Property _TF_FalmerCloakAb auto
 Actor Falmer
 ObjectReference ClosestWall
+GlobalVariable Property _TF_FalmerTimeLeft auto
+GlobalVariable Property _TF_FalmerSpawnBaseChance auto
 
 
 Function ViableWallScan()
@@ -25,7 +27,7 @@ Function FalmerSpawn()
     ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
     Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
     Falmer.AddSpell(_TF_FalmerCloakAb)
-    Utility.Wait(40) ;;timeout until disappear
+    Utility.Wait(_TF_FalmerTimeLeft.GetValue()) ;;timeout until disappear
     ; Exit
     if(!Falmer.Isdead()) ;; if alive
         Falmer.PlaceAtMe(_TF_Portal)
@@ -53,8 +55,11 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
     if (ClosestWall) ; Clean Last closestwall
         ClosestWall = NONE
     endif
-
-    if(akNewLoc.HasKeyword(LocTypeDungeon)) 
+    ;; Theres a random chance of the system even triggering
+    int Roll = Utility.RandomInt(0, 100)
+    int SpawnChance = _TF_FalmerSpawnBaseChance.GetValue() as int
+    Debug.Notification("Roll: " + Roll + " vs Chance: " + SpawnChance) ;DEBUG
+    if(akNewLoc.HasKeyword(LocTypeDungeon) && Roll <= SpawnChance) 
         ;Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
         float TScan = 0 ;Utility.RandomFloat(30,300)
         Debug.Notification("TScan: " + TScan) ;DEBUG
