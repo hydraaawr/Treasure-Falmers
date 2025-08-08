@@ -21,11 +21,11 @@ Event OnPageReset(string page)
     
     ; Spawn Probability Section
     AddHeaderOption("Spawn Settings")
-    spawnChanceOID = AddSliderOption("Base Spawn Probability", _TF_FalmerSpawnBaseChance.GetValue(), "{0}%", OPTION_FLAG_NONE)
+    spawnChanceOID = AddSliderOption("Base Spawn Chance", _TF_FalmerSpawnBaseChance.GetValue(), "{0}%", OPTION_FLAG_NONE)
     
     ; Time Settings Section
     AddHeaderOption("Duration Settings")
-    falmerTimeOID = AddSliderOption("Falmer Duration", _TF_FalmerTimeLeft.GetValue(), "{0} seconds", OPTION_FLAG_NONE)
+    falmerTimeOID = AddSliderOption("Flee Timer", _TF_FalmerTimeLeft.GetValue(), "{0} seconds", OPTION_FLAG_NONE)
     
 EndEvent
 
