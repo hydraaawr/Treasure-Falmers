@@ -14,7 +14,7 @@ GlobalVariable Property _TF_FalmerSpawnBaseChance auto
 
 
 Function ViableWallScan()
-    Debug.Notification("Trying to find a viable wall...") ;DEBUG
+    ;Debug.Notification("Trying to find a viable wall...") ;DEBUG
     ClosestWall = Game.FindClosestReferenceOfAnyTypeInListFromRef(_TF_WallList,PlayerRef,1000)
     ;Debug.Notification("Finished list travel") ;DEBUG
     Utility.Wait(3) ; scan every XX
@@ -22,7 +22,7 @@ endFunction
 
 
 Function FalmerSpawn()
-    Debug.Notification("Closest viable wall: " + ClosestWall.GetFormID()) ;DEBUG
+    ;Debug.Notification("Closest viable wall: " + ClosestWall.GetFormID()) ;DEBUG
     Debug.Notification("A Treasure Falmer appeared!")
     ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
     Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
@@ -56,13 +56,13 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
         ClosestWall = NONE
     endif
     ;; Theres a random chance of the system even triggering
-    int Roll = Utility.RandomInt(0, 100)
+    int Roll = Utility.RandomInt(1, 100)
     int SpawnChance = _TF_FalmerSpawnBaseChance.GetValue() as int
-    Debug.Notification("Roll: " + Roll + " vs Chance: " + SpawnChance) ;DEBUG
+    ;Debug.Notification("Roll: " + Roll + " vs Chance: " + SpawnChance) ;DEBUG
     if(akNewLoc.HasKeyword(LocTypeDungeon) && Roll <= SpawnChance) 
         ;Debug.Notification( _TF_WallList.GetAt(0).GetFormID()) ;DEBUG Check if flm is working
-        float TScan = 0 ;Utility.RandomFloat(30,300)
-        Debug.Notification("TScan: " + TScan) ;DEBUG
+        float TScan = Utility.RandomFloat(60,420) ;bt 1 and 7 minutes to start scanning
+        ;Debug.Notification("TScan: " + TScan) ;DEBUG
         RegisterForSingleUpdate(TScan) ; Register time
 
 
@@ -74,7 +74,7 @@ EndEvent
 
 
 Event OnUpdate()
-    Debug.Notification("Init scan")
+    ;Debug.Notification("Init scan")
     
     while(!ClosestWall && PlayerRef.GetCurrentLocation().HasKeyword(LocTypeDungeon))
         ViableWallScan()
