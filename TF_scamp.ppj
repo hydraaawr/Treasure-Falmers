@@ -11,7 +11,7 @@
     Final="false">
     <Variables>
         <!-- Set the name of your mod: -->
-        <Variable Name="ModName" Value="Treasure Falmers" />
+        <Variable Name="ModName" Value="TF_scamp" />
         <!-- The folder where you store all of your mods -->
         <Variable Name="ModsFolder" Value="C:\Juegos\skyrim_modding\mods\mods" />
     </Variables>

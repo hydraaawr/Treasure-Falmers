@@ -23,7 +23,7 @@ endFunction
 
 Function FalmerSpawn()
     ;Debug.Notification("Closest viable wall: " + ClosestWall.GetFormID()) ;DEBUG
-    Debug.Notification("A Treasure Falmer appeared!")
+    Debug.Notification("A Treasure Scamp appeared!")
     ClosestWall.PlaceAtMe(_TF_Portal) ; create portal effect at wall
     Falmer = ClosestWall.PlaceAtMe(_TF_Falmer) as Actor ; Create an object ref of the Falmer at wall
     Falmer.AddSpell(_TF_FalmerCloakAb)
@@ -33,7 +33,7 @@ Function FalmerSpawn()
         Falmer.PlaceAtMe(_TF_Portal)
         Falmer.Disable(abFadeOut = true)
         Falmer.Delete()
-        Debug.Notification("Treasure Falmer fled away!")
+        Debug.Notification("Treasure Scamp fled away!")
     endif
 endFunction
 
